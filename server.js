@@ -60,9 +60,9 @@ app.get('/hello/:name', (req, res) => {
 // post
 
 app.post('/contact/send-message', (req, res) => {
-  const { author, sender, title, message } = req.body;
+  const { author, sender, title, message, image } = req.body;
 
-  if(author && sender && title && message) {
+  if(author && sender && title && message && image) {
     // res.send('The message has been sent!');
     res.render('contact', { isSent: true });
   }
@@ -71,7 +71,6 @@ app.post('/contact/send-message', (req, res) => {
     res.render('contact', { isError: true });
   }
 });
-
 
 
 app.use((req, res, next) => {
