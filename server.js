@@ -6,7 +6,11 @@ const app = express();
 app.engine('.hbs', hbs());
 app.set('view engine', '.hbs');
 
-app.use(express.static(path.join(__dirname + '/public')));
+
+// middleware
+
+app.use(express.static(path.join(__dirname + '/public'))); 
+app.use(express.urlencoded({ extended: false })); // handle x-www-form-urlencoded 
 
 app.use('/user', (req, res, next) => {
   res.send('Please log in');
@@ -15,12 +19,10 @@ app.use('/user', (req, res, next) => {
 
 app.get('/user/panel', (req, res) => {
   res.render('forbidden'); 
-  // res.sendFile(path.join(__dirname + '/views/forbidden.html'));
 });
 
 app.get('/user/settings', (req, res) => {
   res.render('forbidden');
-  // res.sendFile(path.join(__dirname + '/views/forbidden.html'));
 });
 
 
@@ -55,10 +57,23 @@ app.get('/hello/:name', (req, res) => {
 });
 
 
+// post
+
+app.post('/contact/send-message', (req, res) => {
+  const { author, sender, title, message } = req.body;
+
+  if(author && sender && title && message) {
+    res.send('The message has been sent!');
+  }
+  else {
+    res.send('You can\'t leave fields empty!')
+  }
+});
+
+
 
 app.use((req, res, next) => {
   res.render('404');
-  // res.status(404).sendFile(path.join(__dirname + `/views/404.html`));
 });
 
 app.listen(8000, () => {
