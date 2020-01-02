@@ -61,12 +61,15 @@ app.get('/hello/:name', (req, res) => {
 
 app.post('/contact/send-message', (req, res) => {
   const { author, sender, title, message, image } = req.body;
-
+  console.log(req.body)
+  
   if(author && sender && title && message && image) {
     // res.send('The message has been sent!');
-    res.render('contact', { isSent: true });
+    console.log("Works", image);
+    res.render('contact', { isSent: true, image, isError: false });
   }
   else {
+    console.log("Not works");
     // res.send('You can\'t leave fields empty!')
     res.render('contact', { isError: true });
   }
